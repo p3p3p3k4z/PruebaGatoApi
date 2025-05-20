@@ -1,0 +1,78 @@
+import { Product } from '@/app/interfaces/product';
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
+
+interface Props {
+  params: { id: string };
+}
+
+
+//! En build time
+export async function generateStaticParams() {
+  const staticProds = Array.from({ length: 5 }).map( (v, i) => `${i + 1}` );
+  return staticProds.map( id => ({
+    id: id
+  }));
+  // return [
+  //   { id: '1' },
+  //   { id: '2' },
+  //   { id: '3' },
+  //   { id: '4' },
+  //   { id: '5' },
+  //   { id: '6' },
+  // ]
+}
+
+
+// Fetch de un producto por ID desde la API
+const getProductById = async (id: string): Promise<Product> => {
+  try{
+    const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
+      //cache: 'force-cache',
+      next: {
+        revalidate: 10
+        //revalidate: 60 * 60 * 30 * 6
+      }
+    }).then(res => res.json());
+
+    console.log(`Se cargó producto ${res.id}`);
+    return res;
+  }catch (error) {
+    console.log(error);
+    notFound();
+  }
+  
+};
+
+export default async function ProductPage({ params }: Props) {
+  const product = await getProductById(params.id);
+
+  //if (!product) return notFound();
+
+  return (
+    <div className="max-w-4xl mx-auto p-6">
+      <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="relative w-full md:w-1/2 h-80 md:h-96">
+          <Image
+            src={product.image}
+            alt={product.title}
+            fill
+            className="object-contain rounded"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
+        <div className="md:w-1/2 space-y-4">
+          <h1 className="text-2xl font-bold">{product.title}</h1>
+          <p className="text-gray-700">{product.description}</p>
+          <div className="flex items-center justify-between">
+            <span className="text-xl font-bold text-indigo-600">${product.price}</span>
+            <span className="text-sm text-gray-500">{product.category}</span>
+          </div>
+          <button className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+            Agregar al carrito
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

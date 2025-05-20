@@ -1,0 +1,47 @@
+interface ProductsProps {
+    params: {
+        page: string
+    }; 
+    searchParams: {
+        search?: string;
+    }    
+};
+
+//https://nextjs.org/docs/app/building-your-application/data-fetching/fetching#revalidating-cached-data
+ //revalidate es para conservar en caché la consulta por un tiempo
+    // determinado, por ejemplo 10 segundos 3600 segundos = 1 hr, etc
+
+const get_pokes = async ( limit = 20, offset = 0) => {
+    const data =  await fetch(`https://pokeapi.co/api/v2/pokemon?${limit}=100&offset=${offset}`
+    //    ,  { next: { revalidate: 10 }}    
+    //    ,  { cache: 'no-store'}    
+    )
+    .then(response => response.json());
+
+    return data;
+}
+
+
+const get_products = async ( ) => {
+    const data =  await fetch(`https://fakestoreapi.com/products`).then(resp => resp.json());
+    return data;
+}
+
+
+
+
+export default async function Productpage(props: ProductsProps) {
+    const {page} = await props.params;
+    console.log(page);
+
+    const data  = await get_pokes();
+
+     
+   
+
+    return(
+        <h1>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+    </h1>
+    );
+}

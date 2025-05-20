@@ -1,0 +1,29 @@
+# Next.js Web
+.next
+node_modules/
+package-lock.json
+.env
+.env.local
+.env.development*
+.env.production*
+out
+build
+debug.log
+
+# System files and folders
+.DS_Store
+Thumbs.db
+__pycache__/
+*.py[cod]
+$RECYCLE.BIN/
+*.swp
+*.swo
+.vscode/ # Si usas VS Code y no quieres versionar la configuración local del workspace
+.idea/   # Si usas IntelliJ IDEA y no quieres versionar la configuración local del proyecto
+
+# Logs and temp files (general)
+*.log
+tmp/
+temp/
+*.tmp
+
