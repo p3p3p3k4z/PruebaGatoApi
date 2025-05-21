@@ -1,8 +1,15 @@
+/* src/app/globals.css */
+
+/* ¡¡¡ESTAS TRES LÍNEAS SON FUNDAMENTALES PARA QUE TAILWIND FUNCIONE!!! */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tus variables CSS personalizadas, si quieres usarlas junto con Tailwind */
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
-
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -11,6 +18,7 @@
   }
 }
 
+/* Tus estilos CSS personalizados, si quieres que se apliquen globalmente */
 body {
   background: var(--background);
   color: var(--foreground);
