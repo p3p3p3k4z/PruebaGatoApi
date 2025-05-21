@@ -26,7 +26,7 @@ const get_products = async (page: number = 0): Promise<Product[]> => {
 
     const products: Product[] = data.map((catImage: any) => {
       const breed = catImage.breeds && catImage.breeds.length > 0 ? catImage.breeds[0] : null;
-
+//aqui valido que la imagen tenga informacion asociada
       return {
         id: catImage.id,             
         title: breed ? breed.name : `Gatito Lindo`, 
@@ -70,7 +70,7 @@ export default async function ProductsPage({
 
   return (
     <div className="container mx-auto px-4 py-8"> 
-      <h1 className="text-4xl font-bold text-center mb-10 text-gray-800">Nuestros Adorables Gatitos</h1>
+      <h1 className="text-4xl font-bold text-center mb-10 text-gray-800">Gatitos ^w^</h1>
 
       <ProductGrid products={products} />
 
