@@ -1,3 +1,4 @@
+//src/app/interfaces/product.tsx
 export interface Product {
     id:          string;
     title:       string;
